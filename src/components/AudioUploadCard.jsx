@@ -64,6 +64,12 @@ export default function AudioUploadCard({
       </Dropzone>
 
       {file && (
+        <Text size="sm" mt="md">
+          Selected file: {file.name}
+        </Text>
+      )}
+
+      {file && (
         <Button
           fullWidth
           onClick={handleTranscribe}
