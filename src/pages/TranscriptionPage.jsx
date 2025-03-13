@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Stack, Center } from '@mantine/core';
+import { Stack, Center, Title } from '@mantine/core';
 import ApiKeyCard from '../components/ApiKeyCard';
 import AudioUploadCard from '../components/AudioUploadCard';
 
@@ -16,18 +16,23 @@ export default function TranscriptionPage() {
   }, []);
 
   return (
-    <Center style={{ height: '100vh' }}>
-      <Stack>
-        <ApiKeyCard
-          apiKey={apiKey}
-          onApiKeyChange={setApiKey}
-        />
-        <AudioUploadCard
-          apiKey={apiKey}
-          loading={loading}
-          setLoading={setLoading}
-        />
-      </Stack>
-    </Center>
+    <Stack style={{ height: '100vh' }}>
+      <Title align="center" mb="md">
+        Audio Transcriber
+      </Title>
+      <Center style={{ height: '50%' }}>
+        <Stack>
+          <ApiKeyCard
+            apiKey={apiKey}
+            onApiKeyChange={setApiKey}
+          />
+          <AudioUploadCard
+            apiKey={apiKey}
+            loading={loading}
+            setLoading={setLoading}
+          />
+        </Stack>
+      </Center>
+    </Stack>
   );
 } 
