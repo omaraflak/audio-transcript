@@ -76,9 +76,12 @@ export default function AudioUploadCard({
       </Dropzone>
 
       {file && (
-        <Text size="sm" mt="md">
-          Selected file: {file.name}
-        </Text>
+        <>
+          <audio controls style={{ width: '100%' }}>
+            <source src={URL.createObjectURL(file)} type={file.type} />
+            Your browser does not support the audio element.
+          </audio>
+        </>
       )}
 
       {file && (
