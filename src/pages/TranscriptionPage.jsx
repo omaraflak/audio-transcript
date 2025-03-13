@@ -10,7 +10,7 @@ export default function TranscriptionPage() {
   const [loading, setLoading] = useState(false);
 
   return (
-    <Center style={{ height: '100vh', width: '100vw' }}>
+    <Center style={{ height: '100vh' }}>
       <Stack>
         <ApiKeyCard
           apiKey={apiKey}
