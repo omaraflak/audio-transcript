@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { Card, Text, Button, Group } from '@mantine/core';
 import { Dropzone } from '@mantine/dropzone';
-import { IconUpload, IconX, IconFileMusic } from '@tabler/icons-react';
+import { IconUpload, IconX, IconFileMusic, IconDownload } from '@tabler/icons-react';
 import { transcribeAudio } from '../services/transcription';
 
 export default function AudioUploadCard({
   apiKey,
-  onTranscriptionComplete,
   loading,
   setLoading
 }) {
   const [file, setFile] = useState(null);
+  const [transcription, setTranscription] = useState('');
 
   const handleDrop = (files) => {
     setFile(files[0]);
@@ -22,12 +22,24 @@ export default function AudioUploadCard({
     setLoading(true);
     try {
       const text = await transcribeAudio(file, apiKey);
-      onTranscriptionComplete(text);
+      setTranscription(text);
     } catch (error) {
       console.error('Transcription error:', error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDownload = () => {
+    const blob = new Blob([transcription], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'transcription.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -77,6 +89,18 @@ export default function AudioUploadCard({
           mt="md"
         >
           Transcribe Audio
+        </Button>
+      )}
+
+      {transcription && (
+        <Button
+          fullWidth
+          onClick={handleDownload}
+          mt="md"
+          color="green"
+          leftSection={<IconDownload size={16} />}
+        >
+          Download Transcription
         </Button>
       )}
     </Card>
